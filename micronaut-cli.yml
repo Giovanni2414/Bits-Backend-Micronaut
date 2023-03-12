@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: edu.co.icesi
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [app-name, hibernate-jpa, http-client, java, java-application, jdbc-hikari, junit, logback, lombok, maven, netty-server, postgres, readme, serialization-jsonp, shade, test-resources, yaml]
