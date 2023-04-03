@@ -9,9 +9,11 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @Data
+@Table(name = "`users`")
 @Entity
 @Builder
 @NoArgsConstructor

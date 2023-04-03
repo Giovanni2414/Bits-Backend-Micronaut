@@ -5,6 +5,9 @@ datasources:
   default:
     driver-class-name: org.postgresql.Driver
     db-type: postgres
+    username: postgres
+    password: password
+    url: jdbc:postgresql://localhost:5432/varxen-db
 netty:
   default:
     allocator:
