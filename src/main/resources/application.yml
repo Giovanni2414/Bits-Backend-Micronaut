@@ -5,9 +5,9 @@ datasources:
   default:
     driver-class-name: org.postgresql.Driver
     db-type: postgres
-    url: jdbc:postgresql://localhost:5432/demo
-    username: admin
-    password: password
+    url: ${POSTGRES_CONNECTION_STRING:jdbc:postgresql://localhost:5432/varxen-db}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgrespwd}
 netty:
   default:
     allocator:
@@ -19,3 +19,9 @@ jpa:
         hbm2ddl:
           auto: update
         show_sql: true
+azure:
+  storage:
+    container:
+      name: ${AZURE_CONTAINER_NAME}
+    connection:
+      string: ${AZURE_CONNECTION_STRING}
