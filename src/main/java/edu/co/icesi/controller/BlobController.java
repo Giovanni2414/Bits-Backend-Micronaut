@@ -5,12 +5,11 @@ import edu.co.icesi.api.BlobAPI;
 import edu.co.icesi.service.BlobService;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Post;
-import io.micronaut.http.annotation.Produces;
+import io.micronaut.http.annotation.*;
 import io.micronaut.http.multipart.CompletedFileUpload;
 import lombok.AllArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -27,5 +26,13 @@ public class BlobController implements BlobAPI {
         String filename = blobService.upload(file);
 
         return HttpResponse.ok(filename);
+    }
+
+    @Override
+    @Get("/{fileName}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public HttpResponse<byte[]> download(@PathVariable @NotBlank String fileName) throws IOException {
+        byte[] body = blobService.download(fileName);
+        return HttpResponse.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).body(body);
     }
 }
