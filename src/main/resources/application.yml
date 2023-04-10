@@ -1,6 +1,32 @@
 micronaut:
+  server:
+    port: 8081
   application:
     name: demo
+  security:
+    authentication: idtoken
+    endpoints:
+      login:
+        enabled: true
+    redirect:
+      login-success: /secure/test
+    token:
+      jwm:
+        enabled: true
+        signatures:
+          jwks:
+            keycloak:
+              url: http://localhost:8080/realms/keycloak-react-auth/protocol/openid-connect/certs
+    oauth2.clients.keycloak:
+      realm-name: keycloak-react-auth
+      grant-type: password
+      client-id: react-client
+      client-secret: So1GhoZqaboA20JsGud6zKp5hCyqEj0y
+      authorization:
+        url: http://localhost:8080/realms/keycloak-react-auth/protocol/openid-connect/auth
+      token:
+        url: http://localhost:8080/realms/keycloak-react-auth/protocol/openid-connect/token
+        auth-method: client-secret-post
 datasources:
   default:
     driver-class-name: org.postgresql.Driver
