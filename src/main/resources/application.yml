@@ -19,6 +19,9 @@ jpa:
         hbm2ddl:
           auto: update
         show_sql: true
+    entity-scan:
+      packages:
+        'edu.co.icesi.model'
 azure:
   storage:
     container:

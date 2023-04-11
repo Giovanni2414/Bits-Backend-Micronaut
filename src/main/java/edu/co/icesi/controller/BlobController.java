@@ -10,7 +10,6 @@ import io.micronaut.http.multipart.CompletedFileUpload;
 import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.io.IOException;
 
 @AllArgsConstructor
 @Controller("/blobs")
@@ -21,7 +20,7 @@ public class BlobController implements BlobAPI {
     @Override
     @Post(consumes = MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_PLAIN)
-    public HttpResponse<String> upload(@Nullable CompletedFileUpload file) throws IOException {
+    public HttpResponse<String> upload(@Nullable CompletedFileUpload file) {
 
         String filename = blobService.upload(file);
 
@@ -31,7 +30,7 @@ public class BlobController implements BlobAPI {
     @Override
     @Get("/{fileName}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public HttpResponse<byte[]> download(@PathVariable @NotBlank String fileName) throws IOException {
+    public HttpResponse<byte[]> download(@PathVariable @NotBlank String fileName) {
         byte[] body = blobService.download(fileName);
         return HttpResponse.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).body(body);
     }

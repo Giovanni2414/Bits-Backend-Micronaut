@@ -15,7 +15,6 @@ import jakarta.inject.Singleton;
 import lombok.AllArgsConstructor;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.UUID;
 
 @Singleton
@@ -28,7 +27,7 @@ public class BlobServiceAzureImpl implements BlobService {
     @Inject
     BlobContainerClient blobContainerClient;
 
-    public String upload(CompletedFileUpload file) throws IOException {
+    public String upload(CompletedFileUpload file) {
 
         String fileId = UUID.randomUUID().toString();
 
@@ -46,7 +45,7 @@ public class BlobServiceAzureImpl implements BlobService {
     }
 
     @Override
-    public byte[] download(String fileName) throws IOException {
+    public byte[] download(String fileName) {
 
         BlobClient blob = blobContainerClient.getBlobClient(fileName);
 
