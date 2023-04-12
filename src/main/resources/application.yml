@@ -1,13 +1,15 @@
 micronaut:
+  server:
+    port: 8081
   application:
     name: demo
 datasources:
   default:
     driver-class-name: org.postgresql.Driver
     db-type: postgres
-    url: ${POSTGRES_CONNECTION_STRING:jdbc:postgresql://localhost:5432/varxen-db}
-    username: ${POSTGRES_USERNAME:postgres}
-    password: ${POSTGRES_PASSWORD:postgrespwd}
+    url: jdbc:postgresql://localhost:5432/varxen-db
+    username: postgres
+    password: password
 netty:
   default:
     allocator:

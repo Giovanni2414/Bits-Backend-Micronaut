@@ -19,6 +19,7 @@
         <!-- If you are building with JDK 9 or higher, you can uncomment the lines below to set the release version -->
         <!-- <release.version>8</release.version> -->
         <micronaut.version>3.8.7</micronaut.version>
+        <micronaut.version.data>3.10.0</micronaut.version.data>
         <micronaut.test.resources.enabled>true</micronaut.test.resources.enabled>
         <micronaut.runtime>netty</micronaut.runtime>
         <exec.mainClass>edu.co.icesi.Application</exec.mainClass>
@@ -181,7 +182,7 @@
                         <path>
                             <groupId>io.micronaut.data</groupId>
                             <artifactId>micronaut-data-processor</artifactId>
-                            <version>${micronaut.version}</version>
+                            <version>${micronaut.version.data}</version>
                         </path>
                         <path>
                             <groupId>org.mapstruct</groupId>
@@ -205,7 +206,7 @@
                                 <path>
                                     <groupId>io.micronaut.data</groupId>
                                     <artifactId>micronaut-data-processor</artifactId>
-                                    <version>${micronaut.version}</version>
+                                    <version>${micronaut.version.data}</version>
                                 </path>
                             </annotationProcessorPaths>
                         </configuration>

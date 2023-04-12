@@ -9,7 +9,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Table(name = "`user`")
+@Table(name = "`users`")
 @Data
 @Entity
 @Builder
