@@ -48,7 +48,6 @@ public class KeycloakUserDetailsMapper implements OauthAuthenticationMapper {
             log.error("User: {}", user.body());
             Map<String, Object> attrs = new HashMap<>();
             attrs.put("openIdToken", tokenResponse.getAccessToken());
-            System.out.println(AuthenticationResponse.success(user.body().getUsername(), user.body().getRoles(), attrs));
             return AuthenticationResponse.success(user.body().getUsername(), user.body().getRoles(), attrs);
         });
     }
