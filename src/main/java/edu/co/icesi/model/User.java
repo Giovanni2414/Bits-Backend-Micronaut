@@ -17,11 +17,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class User {
 
+    @Id
     @Type(type = "org.hibernate.type.PostgresUUIDType")
     @Column(name = "user_id")
     private UUID userId;
 
-    @Id
     private String username;
 
     private String email;

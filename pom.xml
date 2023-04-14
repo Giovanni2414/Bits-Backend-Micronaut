@@ -141,6 +141,21 @@
             <artifactId>mapstruct</artifactId>
             <version>1.5.3.Final</version>
         </dependency>
+
+        <!---->
+        <dependency>
+            <groupId>io.micronaut.azure</groupId>
+            <artifactId>micronaut-azure-sdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.objectstorage</groupId>
+            <artifactId>micronaut-object-storage-azure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -173,9 +188,9 @@
                         </compilerArgs>
                         <annotationProcessorPaths combine.self="override">
                             <path>
-                                <groupId>io.micronaut</groupId>
-                                <artifactId>micronaut-inject-java</artifactId>
-                                <version>${micronaut.version}</version>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
                             </path>
                             <path>
                                 <groupId>io.micronaut.security</groupId>
@@ -183,9 +198,9 @@
                                 <version>${micronaut.security.version}</version>
                             </path>
                             <path>
-                                <groupId>org.projectlombok</groupId>
-                                <artifactId>lombok</artifactId>
-                                <version>${lombok.version}</version>
+                                <groupId>io.micronaut.data</groupId>
+                                <artifactId>micronaut-data-processor</artifactId>
+                                <version>${micronaut.version.data}</version>
                             </path>
                             <path>
                                 <groupId>io.micronaut</groupId>
@@ -208,9 +223,9 @@
                                 <version>${micronaut.serialization.version}</version>
                             </path>
                             <path>
-                                <groupId>io.micronaut.data</groupId>
-                                <artifactId>micronaut-data-processor</artifactId>
-                                <version>${micronaut.version.data}</version>
+                                <groupId>io.micronaut</groupId>
+                                <artifactId>micronaut-inject-java</artifactId>
+                                <version>${micronaut.version}</version>
                             </path>
                             <path>
                                 <groupId>org.mapstruct</groupId>

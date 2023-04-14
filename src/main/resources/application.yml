@@ -1,5 +1,7 @@
 micronaut:
   server:
+    cors:
+      enabled: true
     port: 8081
   application:
     name: demo
