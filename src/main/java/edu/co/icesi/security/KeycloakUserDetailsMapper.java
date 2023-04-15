@@ -34,7 +34,7 @@ public class KeycloakUserDetailsMapper implements OauthAuthenticationMapper {
     @Property(name = "micronaut.security.oauth2.clients.keycloak.realm-name")
     private String realmName;
 
-    @Client("http://localhost:8080")
+    @Client("http://localhost:8081")
     @Inject
     private RxHttpClient client;
 
@@ -44,10 +44,18 @@ public class KeycloakUserDetailsMapper implements OauthAuthenticationMapper {
                 .exchange(HttpRequest.POST("/realms/"+ realmName +"/protocol/openid-connect/token/introspect", "token=" + tokenResponse.getAccessToken())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .basicAuth(clientId, clientSecret), KeycloakUser.class);
+
         return res.map(user -> {
             log.error("User: {}", user.body());
             Map<String, Object> attrs = new HashMap<>();
             attrs.put("openIdToken", tokenResponse.getAccessToken());
+
+            KeycloakUser keycloakUser = new KeycloakUser(user.body().getEmail(), user.body().getUsername(), user.body().getRoles());
+
+            UserContextHolder.setUserContext(keycloakUser);
+
+            System.out.println(UserContextHolder.getContext().getUsername());
+
             return AuthenticationResponse.success(user.body().getUsername(), user.body().getRoles(), attrs);
         });
     }

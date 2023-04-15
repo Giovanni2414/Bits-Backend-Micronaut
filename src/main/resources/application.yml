@@ -2,7 +2,7 @@ micronaut:
   server:
     cors:
       enabled: true
-    port: 8081
+    port: ${SERVER_PORT:8080}
   application:
     name: demo
   security:
@@ -18,24 +18,24 @@ micronaut:
         signatures:
           jwks:
             keycloak:
-              url: http://localhost:8080/realms/keycloak-react-auth/protocol/openid-connect/certs
+              url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/certs
     oauth2.clients.keycloak:
-      realm-name: keycloak-react-auth
+      realm-name: ${KEYCLOAK_REALM:keycloak-react-auth}
       grant-type: password
-      client-id: react-client
-      client-secret: So1GhoZqaboA20JsGud6zKp5hCyqEj0y
+      client-id: ${KEYCLOAK_CLIENT:react-client}
+      client-secret: ${KEYCLOAK_SECRET:ePsICILVV7R8oBrwzG8cKRXDmlDjQisI}
       authorization:
-        url: http://localhost:8080/realms/keycloak-react-auth/protocol/openid-connect/auth
+        url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/auth
       token:
-        url: http://localhost:8080/realms/keycloak-react-auth/protocol/openid-connect/token
+        url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/token
         auth-method: client-secret-post
 datasources:
   default:
     driver-class-name: org.postgresql.Driver
     db-type: postgres
-    username: postgres
+    username: admin
     password: password
-    url: jdbc:postgresql://localhost:5432/varxen-db
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:varxen-db}
 netty:
   default:
     allocator:
