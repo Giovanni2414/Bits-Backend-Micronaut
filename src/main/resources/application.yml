@@ -7,9 +7,9 @@ datasources:
   default:
     driver-class-name: org.postgresql.Driver
     db-type: postgres
-    url: jdbc:postgresql://localhost:5432/varxen-db
+    url: jdbc:postgresql://localhost:49153/varxen-db
     username: postgres
-    password: password
+    password: postgrespw
 netty:
   default:
     allocator:
