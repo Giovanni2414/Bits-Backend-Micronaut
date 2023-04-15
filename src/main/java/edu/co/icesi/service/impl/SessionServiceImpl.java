@@ -4,6 +4,7 @@ import edu.co.icesi.constants.ErrorConstants;
 import edu.co.icesi.error.exception.VarxenPerformanceError;
 import edu.co.icesi.error.exception.VarxenPerformanceException;
 import edu.co.icesi.model.Session;
+import edu.co.icesi.model.User;
 import edu.co.icesi.repository.SessionRepository;
 import edu.co.icesi.service.SessionService;
 import io.micronaut.http.HttpStatus;
@@ -25,6 +26,10 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session createSession(Session session) {
+
+
+        session.setUser(new User(UUID.fromString("f4e86d73-12a0-4d8d-8ea1-6c7e6b6b4403"), "username", "email", "password", "organizationName", "firstname", "lastname"));
+
         return sessionRepository.save(session);
     }
 

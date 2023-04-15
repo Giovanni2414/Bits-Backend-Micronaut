@@ -9,4 +9,5 @@ public class ErrorConstants {
     final public static String HAR_FILE_PATH_REQUIRED = "Har file path is required";
     final public static String SESSION_NAME_REQUIRED = "Session name is required";
 
+    public static final String SESSION_NAME_INVALID = "Session name is invalid";
 }

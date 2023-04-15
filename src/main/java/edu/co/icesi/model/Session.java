@@ -30,6 +30,10 @@ public class Session {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @PrePersist
     public void generated() {
         this.sessionId = UUID.randomUUID();
