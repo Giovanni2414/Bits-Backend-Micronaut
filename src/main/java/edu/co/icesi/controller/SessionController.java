@@ -44,9 +44,9 @@ public class SessionController implements SessionAPI {
     @Get
     public List<SessionDTO> getAllSessions(@QueryValue Optional<Integer> offset, @QueryValue Optional<Integer> limit) {
 
-        offset.ifPresent(System.out::println);
-
-        limit.ifPresent(System.out::println);
+        if (offset.isPresent() && limit.isPresent()) {
+            return sessionService.getSessionsPaginated(offset.get(), limit.get()).stream().map(sessionMapper::toSessionDTO).collect(Collectors.toList());
+        }
 
         return sessionService.getAllSessions().stream().map(sessionMapper::toSessionDTO).collect(Collectors.toList());
     }

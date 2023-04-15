@@ -7,15 +7,15 @@ import edu.co.icesi.model.Session;
 import edu.co.icesi.model.User;
 import edu.co.icesi.repository.SessionRepository;
 import edu.co.icesi.service.SessionService;
+import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpStatus;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Singleton
 @AllArgsConstructor
@@ -27,8 +27,12 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public Session createSession(Session session) {
 
+        //TODO remove this and change for real logged-user id
+        UUID userID = UUID.fromString("f4e86d73-12a0-4d8d-8ea1-6c7e6b6b4402");
 
-        session.setUser(new User(UUID.fromString("f4e86d73-12a0-4d8d-8ea1-6c7e6b6b4403"), "username", "email", "password", "organizationName", "firstname", "lastname"));
+        User user = User.builder().userId(userID).build();
+
+        session.setUser(user);
 
         return sessionRepository.save(session);
     }
@@ -40,6 +44,11 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public List<Session> getAllSessions() {
-        return StreamSupport.stream(sessionRepository.findAll().spliterator(), false).collect(Collectors.toList());
+        return new ArrayList<>(sessionRepository.findAll());
+    }
+
+    @Override
+    public List<Session> getSessionsPaginated(int offset, int limit) {
+        return sessionRepository.findAll(Pageable.from(offset, limit)).getContent();
     }
 }

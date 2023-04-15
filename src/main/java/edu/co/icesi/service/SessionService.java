@@ -11,4 +11,6 @@ public interface SessionService {
     Session getSession(UUID id);
 
     List<Session> getAllSessions();
+
+    List<Session> getSessionsPaginated(int offset, int limit);
 }
