@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         try {
             User saved = userRepository.save(user);
-            System.out.println(adminRequest.registerUserKeycloak(user));
+            adminRequest.registerUserKeycloak(user);
             return saved;
         } catch (ConstraintViolationException cve) {
             //TODO pendiente lanzar excepción

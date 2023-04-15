@@ -51,5 +51,4 @@ public class KeycloakUserDetailsMapper implements OauthAuthenticationMapper {
             return AuthenticationResponse.success(user.body().getUsername(), user.body().getRoles(), attrs);
         });
     }
-
 }
