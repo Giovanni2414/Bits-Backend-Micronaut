@@ -15,4 +15,5 @@ public class KeycloakUser {
     private String email;
     private String username;
     private List<String> roles;
+    private String token;
 }

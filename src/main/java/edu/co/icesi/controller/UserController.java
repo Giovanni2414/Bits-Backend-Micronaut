@@ -25,4 +25,9 @@ public class UserController implements UserAPI {
     public UserDTO createUser(UserDTO userDTO) {
         return userMapper.fromUser(userService.createUser(userMapper.fromDTO(userDTO)));
     }
+
+    @Override
+    public String testGet() {
+        return "Test Get";
+    }
 }

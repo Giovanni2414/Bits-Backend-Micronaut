@@ -11,7 +11,7 @@ micronaut:
       login:
         enabled: true
     redirect:
-      login-success: /secure/test
+      enabled: false
     token:
       jwm:
         enabled: true
@@ -20,10 +20,12 @@ micronaut:
             keycloak:
               url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/certs
     oauth2.clients.keycloak:
+      keycloak-port: ${KEYCLOAK_PORT:8081}
+      keycloak-host: ${KEYCLOAK_HOST:localhost}
       realm-name: ${KEYCLOAK_REALM:keycloak-react-auth}
       grant-type: password
       client-id: ${KEYCLOAK_CLIENT:react-client}
-      client-secret: ${KEYCLOAK_SECRET:ePsICILVV7R8oBrwzG8cKRXDmlDjQisI}
+      client-secret: ${KEYCLOAK_SECRET:So1GhoZqaboA20JsGud6zKp5hCyqEj0y}
       authorization:
         url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/auth
       token:
@@ -33,8 +35,8 @@ datasources:
   default:
     driver-class-name: org.postgresql.Driver
     db-type: postgres
-    username: admin
-    password: password
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:varxen-db}
 netty:
   default:
