@@ -5,7 +5,8 @@ import edu.co.icesi.api.BlobAPI;
 import edu.co.icesi.service.BlobService;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.multipart.CompletedFileUpload;
 import lombok.AllArgsConstructor;
 
@@ -18,8 +19,6 @@ public class BlobController implements BlobAPI {
     private BlobService blobService;
 
     @Override
-    @Post(consumes = MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_PLAIN)
     public HttpResponse<String> upload(@Nullable CompletedFileUpload file) {
 
         String filename = blobService.upload(file);
@@ -28,10 +27,15 @@ public class BlobController implements BlobAPI {
     }
 
     @Override
-    @Get("/{fileName}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public HttpResponse<byte[]> download(@PathVariable @NotBlank String fileName) {
         byte[] body = blobService.download(fileName);
         return HttpResponse.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).body(body);
     }
+
+    @Override
+    public HttpResponse<byte[]> listAll(String fileName) {
+        return null;
+    }
+
+
 }

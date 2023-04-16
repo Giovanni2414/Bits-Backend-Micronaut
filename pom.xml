@@ -129,6 +129,10 @@
             <artifactId>micronaut-reactor</artifactId>
             <version>2.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -194,10 +198,18 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>1.5.3.Final</version>
                         </path>
+                        <path>
+                            <groupId>io.micronaut.openapi</groupId>
+                            <artifactId>micronaut-openapi</artifactId>
+                            <version>4.8.6</version>
+                        </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
                         <arg>-Amicronaut.processing.group=edu.co.icesi</arg>
                         <arg>-Amicronaut.processing.module=demo</arg>
+                        <arg>
+                            -Amicronaut.openapi.views.spec=rapidoc.enabled=true,swagger-ui.enabled=true,swagger-ui.theme=flattop
+                        </arg>
                     </compilerArgs>
                 </configuration>
                 <executions>
