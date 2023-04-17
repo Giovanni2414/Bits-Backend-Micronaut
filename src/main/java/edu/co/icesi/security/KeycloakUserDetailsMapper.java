@@ -34,7 +34,7 @@ public class KeycloakUserDetailsMapper implements OauthAuthenticationMapper {
     @Property(name = "micronaut.security.oauth2.clients.keycloak.realm-name")
     private String realmName;
 
-    @Client("http://localhost:8080")
+    @Client("http://${micronaut.security.oauth2.clients.keycloak.keycloak-host}:${micronaut.security.oauth2.clients.keycloak.keycloak-port}")
     @Inject
     private RxHttpClient client;
 

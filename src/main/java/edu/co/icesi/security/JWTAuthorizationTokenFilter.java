@@ -13,6 +13,7 @@ import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
+import io.reactivex.Flowable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.SneakyThrows;
@@ -20,9 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.reactivestreams.Publisher;
-import reactor.core.publisher.Mono;
-import reactor.netty.http.server.HttpServerResponse;
-import io.micronaut.http.MediaType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +41,7 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
     @Property(name = "micronaut.security.oauth2.clients.keycloak.client-secret")
     private String clientSecret;
 
-    @Client("http://localhost:8080")
+    @Client("http://${micronaut.security.oauth2.clients.keycloak.keycloak-host}:${micronaut.security.oauth2.clients.keycloak.keycloak-port}")
     @Inject
     private HttpClient client;
 
@@ -58,8 +56,7 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
                     UserContextHolder.setUserContext(keycloakUser);
                     return chain.proceed(request);
                 }else{
-                    Publisher<MutableHttpResponse<?>> response = chain.proceed(request);
-                    createUnauthorizedFilter(new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.CODES_01.getCode(), CodesError.CODES_01.getMessage())), response);
+                    return createUnauthorizedFilter(new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.CODES_01.getCode(), CodesError.CODES_01.getMessage())));
                 }
             } catch(JSONException e){
                 //TODO THROW UNAUTHORIZED
@@ -75,16 +72,16 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
     }
 
     @SneakyThrows
-    private void createUnauthorizedFilter(VarxenPerformanceException userDemoException, Publisher<MutableHttpResponse<?>> response) {
+    private Publisher<MutableHttpResponse<?>> createUnauthorizedFilter(VarxenPerformanceException varxenPerformanceException) {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        VarxenPerformanceError userDemoError = userDemoException.getError();
+        VarxenPerformanceError varxenPerformanceError = varxenPerformanceException.getError();
 
-        String message = objectMapper.writeValueAsString(userDemoError);
+        String message = objectMapper.writeValueAsString(varxenPerformanceError);
 
-        //response.status(401);
-        //response.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
-        //response.sendString(Mono.just(message));
+        MutableHttpResponse<?> response = HttpResponse.status(HttpStatus.UNAUTHORIZED).header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON).body(message);
+
+        return Flowable.just(response);
     }
 
     private KeycloakUser parseKeycloakUser(String token){
@@ -99,13 +96,12 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
         JSONObject jsonObject = new JSONObject(response.body());
         String email = jsonObject.get("email").toString();
         String username = jsonObject.get("preferred_username").toString();
-        List<String> roles = new ArrayList<String>();
+        List<String> roles = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("roles");
         for (Object element:jsonArray) {
             roles.add(element.toString());
         }
-        KeycloakUser keycloakUser = new KeycloakUser(email, username, roles, token);
-        return keycloakUser;
+        return new KeycloakUser(email, username, roles, token);
     }
 
     private boolean containsToken(HttpRequest<?> request){

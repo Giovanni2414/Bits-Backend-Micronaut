@@ -37,7 +37,7 @@ datasources:
     db-type: postgres
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:password}
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:varxen-db}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:varxen-db}
 netty:
   default:
     allocator:
