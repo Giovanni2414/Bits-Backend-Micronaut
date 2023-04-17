@@ -31,7 +31,7 @@ import java.util.List;
 @Filter("/**")
 public class JWTAuthorizationTokenFilter implements HttpServerFilter {
 
-    private static final String[] excludedPaths = {"POST /login"};
+    private static final String[] excludedPaths = {"POST /login", "POST /users"};
 
     private final static String TOKEN_PREFIX = "Bearer ";
 
@@ -59,7 +59,7 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
                     return createUnauthorizedFilter(new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.CODES_01.getCode(), CodesError.CODES_01.getMessage())));
                 }
             } catch(JSONException e){
-                //TODO THROW UNAUTHORIZED
+                return createUnauthorizedFilter(new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.CODES_01.getCode(), CodesError.CODES_01.getMessage())));
             } finally {
                 UserContextHolder.clearContext();
             }
@@ -68,6 +68,9 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
     }
 
     public boolean excludePaths(HttpRequest<?> request){
+        if(request.getMethod().toString().equalsIgnoreCase("OPTIONS")){
+            return true;
+        }
         return Arrays.stream(excludedPaths).anyMatch(path -> path.equalsIgnoreCase(request.toString()));
     }
 

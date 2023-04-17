@@ -2,11 +2,16 @@ micronaut:
   server:
     cors:
       enabled: true
+      configurations:
+        ui:
+          allowed-origins:
+            - http://localhost:3000
+            - chrome-extension://ghkpiklekcefkblaagnaagmmcnhhmogg
     port: ${SERVER_PORT:8080}
   application:
     name: demo
   security:
-    authentication: idtoken
+    authentication: bearer
     endpoints:
       login:
         enabled: true
