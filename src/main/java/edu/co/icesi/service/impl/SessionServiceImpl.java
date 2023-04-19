@@ -57,4 +57,10 @@ public class SessionServiceImpl implements SessionService {
     public List<Session> getSessionsPaginated(int offset, int limit) {
         return sessionRepository.findAll(Pageable.from(offset, limit)).getContent();
     }
+
+    @Override
+    public Session deleteSession(UUID sessionId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteSession'");
+    }
 }

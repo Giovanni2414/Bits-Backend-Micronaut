@@ -18,4 +18,6 @@ public interface SessionAPI {
     SessionDTO getSession(UUID id);
 
     List<SessionDTO> getAllSessions(Optional<Integer> offset, Optional<Integer> limit);
+
+    SessionDTO deleteSession(UUID sessionId);
 }

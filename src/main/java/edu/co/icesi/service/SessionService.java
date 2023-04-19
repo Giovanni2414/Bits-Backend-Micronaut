@@ -13,4 +13,6 @@ public interface SessionService {
     List<Session> getAllSessions();
 
     List<Session> getSessionsPaginated(int offset, int limit);
+
+    Session deleteSession(UUID sessionId);
 }

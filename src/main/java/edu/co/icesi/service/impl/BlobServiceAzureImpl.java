@@ -4,6 +4,7 @@ package edu.co.icesi.service.impl;
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
+
 import edu.co.icesi.constants.ErrorConstants;
 import edu.co.icesi.error.exception.VarxenPerformanceError;
 import edu.co.icesi.error.exception.VarxenPerformanceException;
@@ -17,6 +18,8 @@ import jakarta.inject.Singleton;
 import lombok.AllArgsConstructor;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Singleton
@@ -70,4 +73,16 @@ public class BlobServiceAzureImpl implements BlobService {
 
         return outputStream.toByteArray();
     }
+
+    @Override
+    public List<Blob> listBlobs() {
+        return new ArrayList<>(blobRepository.findAll());
+    }
+
+    @Override
+    public Blob deleteBlob(UUID blobId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteBlob'");
+    }
+    
 }

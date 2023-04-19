@@ -50,4 +50,10 @@ public class SessionController implements SessionAPI {
 
         return sessionService.getAllSessions().stream().map(sessionMapper::toSessionDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public SessionDTO deleteSession(UUID sessionId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteSession'");
+    }
 }
