@@ -1,6 +1,7 @@
+#file: noinspection MnYamlConfig
 micronaut:
   server:
-    port: 8081
+    port: 8080
     max-request-size: 1GB
     multipart:
       max-file-size: 100MB
@@ -22,24 +23,24 @@ micronaut:
         signatures:
           jwks:
             keycloak:
-              url: http://localhost:8080/realms/keycloak-react-auth/protocol/openid-connect/certs
+              url: http://localhost:8081/realms/keycloak-react-auth/protocol/openid-connect/certs
     oauth2.clients.keycloak:
       realm-name: keycloak-react-auth
       grant-type: password
       client-id: react-client
       client-secret: ePsICILVV7R8oBrwzG8cKRXDmlDjQisI
       authorization:
-        url: http://localhost:8080/realms/keycloak-react-auth/protocol/openid-connect/auth
+        url: http://localhost:8081/realms/keycloak-react-auth/protocol/openid-connect/auth
       token:
-        url: http://localhost:8080/realms/keycloak-react-auth/protocol/openid-connect/token
+        url: http://localhost:8081/realms/keycloak-react-auth/protocol/openid-connect/token
         auth-method: client-secret-post
 datasources:
   default:
     driver-class-name: org.postgresql.Driver
     db-type: postgres
-    username: postgres
-    password: password
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT_DB:5432/varxen-db}
+    username: ${DB_USERNAME:admin}
+    password: ${DB_PASSWORD:password}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:varxen-db}
 
 netty:
   default:

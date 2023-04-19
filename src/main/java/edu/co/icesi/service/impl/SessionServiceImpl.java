@@ -30,11 +30,17 @@ public class SessionServiceImpl implements SessionService {
         //TODO remove this and change for real logged-user id
         UUID userID = UUID.fromString("f4e86d73-12a0-4d8d-8ea1-6c7e6b6b4402");
 
+        System.out.println(session.getBlob().getBlobId());
+
         User user = User.builder().userId(userID).build();
 
         session.setUser(user);
 
-        return sessionRepository.save(session);
+        try {
+            return sessionRepository.save(session);
+        } catch (Exception e) {
+            throw new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(ErrorConstants.SESSION_NOT_CREATED, ErrorConstants.SESSION_NOT_CREATED));
+        }
     }
 
     @Override

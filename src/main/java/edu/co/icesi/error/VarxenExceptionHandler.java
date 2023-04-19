@@ -12,7 +12,7 @@ import jakarta.inject.Singleton;
 @Produces
 @Singleton
 @Requires(classes = {ExceptionHandler.class, VarxenPerformanceException.class})
-public class GlobalExceptionHandler implements ExceptionHandler<VarxenPerformanceException, HttpResponse<VarxenPerformanceError>> {
+public class VarxenExceptionHandler implements ExceptionHandler<VarxenPerformanceException, HttpResponse<VarxenPerformanceError>> {
 
     @Override
     public HttpResponse<VarxenPerformanceError> handle(HttpRequest request, VarxenPerformanceException exception) {

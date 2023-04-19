@@ -8,19 +8,21 @@ import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.multipart.CompletedFileUpload;
 
+import java.util.UUID;
+
 
 @Client
 public interface BlobAPI {
 
     @Post(consumes = MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_PLAIN)
-    HttpResponse<String> upload(CompletedFileUpload file);
+    HttpResponse<UUID> upload(CompletedFileUpload file);
 
     @Get("/{fileName}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    HttpResponse<byte[]> download(String fileName);
+    HttpResponse<byte[]> download(UUID fileName);
 
     @Get()
     @Produces(MediaType.APPLICATION_JSON)
-    HttpResponse<byte[]> listAll(String fileName);
+    HttpResponse<byte[]> listAll();
 }

@@ -2,10 +2,12 @@ package edu.co.icesi.service;
 
 import io.micronaut.http.multipart.CompletedFileUpload;
 
+import java.util.UUID;
+
 
 public interface BlobService {
 
-    String upload(CompletedFileUpload file);
+    UUID upload(CompletedFileUpload file);
 
-    byte[] download(String fileName);
+    byte[] download(UUID fileName);
 }

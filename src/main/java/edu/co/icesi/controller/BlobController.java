@@ -11,6 +11,7 @@ import io.micronaut.http.multipart.CompletedFileUpload;
 import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Controller("/blobs")
@@ -19,21 +20,21 @@ public class BlobController implements BlobAPI {
     private BlobService blobService;
 
     @Override
-    public HttpResponse<String> upload(@Nullable CompletedFileUpload file) {
+    public HttpResponse<UUID> upload(@Nullable CompletedFileUpload file) {
 
-        String filename = blobService.upload(file);
+        UUID filename = blobService.upload(file);
 
         return HttpResponse.ok(filename);
     }
 
     @Override
-    public HttpResponse<byte[]> download(@PathVariable @NotBlank String fileName) {
+    public HttpResponse<byte[]> download(@PathVariable @NotBlank UUID fileName) {
         byte[] body = blobService.download(fileName);
         return HttpResponse.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).body(body);
     }
 
     @Override
-    public HttpResponse<byte[]> listAll(String fileName) {
+    public HttpResponse<byte[]> listAll() {
         return null;
     }
 
