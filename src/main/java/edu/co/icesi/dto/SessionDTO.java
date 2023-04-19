@@ -21,7 +21,6 @@ public class SessionDTO {
     private UUID sessionId;
 
     @NotNull(message = ErrorConstants.SESSION_NAME_REQUIRED)
-    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = ErrorConstants.SESSION_NAME_INVALID)
     String name;
 
     @NotNull(message = ErrorConstants.HAR_FILE_PATH_REQUIRED)
