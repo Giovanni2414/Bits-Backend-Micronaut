@@ -7,37 +7,31 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@Table(name = "session")
+@Table(name = "blobs")
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Session {
+public class Blob implements Serializable {
     @Id
-    @Column(name = "session_id")
+    @Column(name = "blob_id")
     @Type(type = "org.hibernate.type.PostgresUUIDType")
-    private UUID sessionId;
+    private UUID blobId;
 
-    private String name;
 
-    @OneToOne
-    @JoinColumn(name = "blob_id")
-    private Blob blob;
+    @Column(name = "relative_path", nullable = false, unique = true)
+    private String relativePath;
 
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @PrePersist
     public void generated() {
-        this.sessionId = UUID.randomUUID();
         this.creationDate = LocalDateTime.now();
     }
 }

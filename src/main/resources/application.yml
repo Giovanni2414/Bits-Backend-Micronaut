@@ -8,6 +8,11 @@ micronaut:
             - http://localhost:3000
             - chrome-extension://ghkpiklekcefkblaagnaagmmcnhhmogg
     port: ${SERVER_PORT:8080}
+    max-request-size: 1GB
+    multipart:
+      max-file-size: 100MB
+      mixed: true
+      disk: true
   application:
     name: demo
   security:
@@ -30,7 +35,7 @@ micronaut:
       realm-name: ${KEYCLOAK_REALM:keycloak-react-auth}
       grant-type: password
       client-id: ${KEYCLOAK_CLIENT:react-client}
-      client-secret: ${KEYCLOAK_SECRET:So1GhoZqaboA20JsGud6zKp5hCyqEj0y}
+      client-secret: ${KEYCLOAK_SECRET}
       authorization:
         url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/auth
       token:
@@ -41,10 +46,16 @@ datasources:
     driver-class-name: org.postgresql.Driver
     db-type: postgres
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:password}
+    password: ${DB_PASSWORD:postgrespwd}
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:varxen-db}
 netty:
   default:
     allocator:
       max-order: 3
 jpa.default.properties.hibernate.hbm2ddl.auto: update
+azure:
+  storage:
+    container:
+      name: ${AZURE_CONTAINER_NAME}
+    connection:
+      string: ${AZURE_CONNECTION_STRING}
