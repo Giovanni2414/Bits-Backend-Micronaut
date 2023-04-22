@@ -14,4 +14,5 @@ public class ErrorConstants {
     public static final String BLOB_NOT_CREATED = "Blob not created";
 
     public static final String CONSTRAINT_VIOLATION = "Constraint violation";
+    final public static String USER_NOT_FOUND = "User not found";
 }

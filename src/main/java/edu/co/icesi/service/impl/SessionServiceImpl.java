@@ -6,6 +6,8 @@ import edu.co.icesi.error.exception.VarxenPerformanceException;
 import edu.co.icesi.model.Session;
 import edu.co.icesi.model.User;
 import edu.co.icesi.repository.SessionRepository;
+import edu.co.icesi.repository.UserRepository;
+import edu.co.icesi.security.UserContextHolder;
 import edu.co.icesi.service.SessionService;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.http.HttpStatus;
@@ -15,6 +17,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Singleton
@@ -24,15 +27,16 @@ public class SessionServiceImpl implements SessionService {
     @Inject
     private SessionRepository sessionRepository;
 
+    @Inject
+    private UserRepository userRepository;
+
+
     @Override
     public Session createSession(Session session) {
 
-        //TODO remove this and change for real logged-user id
-        UUID userID = UUID.fromString("f4e86d73-12a0-4d8d-8ea1-6c7e6b6b4402");
+        String username = UserContextHolder.getContext().getUsername();
 
-        System.out.println(session.getBlob().getBlobId());
-
-        User user = User.builder().userId(userID).build();
+        User user = userRepository.findByUsername(username).orElseThrow( () -> new VarxenPerformanceException(HttpStatus.NOT_FOUND, new VarxenPerformanceError(ErrorConstants.USER_NOT_FOUND, ErrorConstants.USER_NOT_FOUND)));
 
         session.setUser(user);
 

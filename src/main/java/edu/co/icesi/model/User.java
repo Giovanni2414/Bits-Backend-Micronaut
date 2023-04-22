@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Table(name = "`users`")
 @Data
-@Table(name = "`users`")
 @Entity
 @Builder
 @NoArgsConstructor

@@ -24,6 +24,7 @@ import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @Singleton
@@ -47,13 +48,21 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
 
     @Override
     public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
-        System.out.println("pidePeticion " + request.toString());
+        System.out.println(request.toString());
         if(!excludePaths(request)){
             try{
                 if(containsToken(request)) {
-                    String token = request.getHeaders().getAuthorization().get().replace(TOKEN_PREFIX, StringUtils.EMPTY_STRING);
+                    String jwt = request.getHeaders().getAuthorization().get().replace(TOKEN_PREFIX, StringUtils.EMPTY_STRING);
+                    String token = decodeJWT(jwt);
                     KeycloakUser keycloakUser = parseKeycloakUser(token);
+                    System.out.println(keycloakUser.getUsername());
+                    System.out.println(keycloakUser.getEmail());
+                    System.out.println(keycloakUser.getToken());
                     UserContextHolder.setUserContext(keycloakUser);
+                    System.out.println("CONTEX HOLDER");
+                    System.out.println(UserContextHolder.getContext().getUsername());
+                    System.out.println(UserContextHolder.getContext().getEmail());
+                    System.out.println(UserContextHolder.getContext().getToken());
                     return chain.proceed(request);
                 }else{
                     return createUnauthorizedFilter(new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.CODES_01.getCode(), CodesError.CODES_01.getMessage())));
@@ -105,6 +114,16 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
             roles.add(element.toString());
         }
         return new KeycloakUser(email, username, roles, token);
+    }
+
+    private String decodeJWT(String jwt){
+        String[] chunks = jwt.split("\\.");
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+
+        String header = new String(decoder.decode(chunks[0]));
+        String payload = new String(decoder.decode(chunks[1]));
+        JSONObject jsonObject = new JSONObject(payload);
+        return jsonObject.get("openIdToken").toString();
     }
 
     private boolean containsToken(HttpRequest<?> request){

@@ -6,6 +6,8 @@ import edu.co.icesi.mapper.SessionMapper;
 import edu.co.icesi.service.SessionService;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 import jakarta.inject.Inject;
 import lombok.AllArgsConstructor;
 
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Controller("/sessions")
+@Secured(SecurityRule.IS_ANONYMOUS)
 public class SessionController implements SessionAPI {
 
 

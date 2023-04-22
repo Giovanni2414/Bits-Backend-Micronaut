@@ -1,9 +1,11 @@
 package edu.co.icesi.security;
 
+import jakarta.inject.Singleton;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Singleton
 public abstract class UserContextHolder {
 
     private static final ThreadLocal<KeycloakUser> userContextHolder = new ThreadLocal<>();
@@ -18,6 +20,7 @@ public abstract class UserContextHolder {
      * @return {@link KeycloakUser}
      */
     public static KeycloakUser getContext() {
+        System.out.println(userContextHolder);
         KeycloakUser ctx = userContextHolder.get();
         if (ctx == null) {
             ctx = createEmptyContext();

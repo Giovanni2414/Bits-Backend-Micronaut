@@ -6,6 +6,7 @@ micronaut:
         ui:
           allowed-origins:
             - http://localhost:3000
+            - http://localhost:3000/VarxenPerformance/Session
             - chrome-extension://ghkpiklekcefkblaagnaagmmcnhhmogg
     port: ${SERVER_PORT:8080}
     max-request-size: 1GB
@@ -28,7 +29,7 @@ micronaut:
         signatures:
           jwks:
             keycloak:
-              url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/certs
+                url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/certs
     oauth2.clients.keycloak:
       keycloak-port: ${KEYCLOAK_PORT:8081}
       keycloak-host: ${KEYCLOAK_HOST:localhost}
