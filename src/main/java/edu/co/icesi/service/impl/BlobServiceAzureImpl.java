@@ -5,6 +5,7 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 
+import edu.co.icesi.constant.CodesError;
 import edu.co.icesi.constants.ErrorConstants;
 import edu.co.icesi.error.exception.VarxenPerformanceError;
 import edu.co.icesi.error.exception.VarxenPerformanceException;
@@ -48,7 +49,7 @@ public class BlobServiceAzureImpl implements BlobService {
             Blob saved = Blob.builder().blobId(blobId).relativePath(fileId).build();
             blobRepository.save(saved);
         } catch (Exception e) {
-            throw new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(ErrorConstants.BLOB_NOT_CREATED, ErrorConstants.BLOB_NOT_CREATED));
+            throw new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.BLOB_NOT_CREATED.getCode(), CodesError.BLOB_NOT_CREATED.getMessage()));
         }
 
         return blobId;
@@ -58,7 +59,7 @@ public class BlobServiceAzureImpl implements BlobService {
     public byte[] download(UUID fileName) {
 
         Blob blob = blobRepository.findById(fileName).orElseThrow(() -> new VarxenPerformanceException(HttpStatus.NOT_FOUND,
-                new VarxenPerformanceError(ErrorConstants.FILE_NOT_FOUND, ErrorConstants.FILE_NOT_FOUND)));
+                new VarxenPerformanceError(CodesError.FILE_NOT_FOUND.getCode(), CodesError.FILE_NOT_FOUND.getMessage())));
 
         BlobClient blobClient = blobContainerClient.getBlobClient(blob.getRelativePath());
 
@@ -68,7 +69,7 @@ public class BlobServiceAzureImpl implements BlobService {
             blobClient.downloadStream(outputStream);
         } catch (Exception e) {
             throw new VarxenPerformanceException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    new VarxenPerformanceError(ErrorConstants.FILE_NOT_FOUND, ErrorConstants.FILE_NOT_FOUND));
+                    new VarxenPerformanceError(CodesError.FILE_NOT_FOUND.getCode(), CodesError.FILE_NOT_FOUND.getMessage()));
         }
 
         return outputStream.toByteArray();

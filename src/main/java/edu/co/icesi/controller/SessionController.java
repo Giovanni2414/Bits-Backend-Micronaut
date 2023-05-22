@@ -55,8 +55,9 @@ public class SessionController implements SessionAPI {
     }
 
     @Override
-    public SessionDTO deleteSession(UUID sessionId) {
+    @Delete("/{sessionId}")
+    public SessionDTO deleteSession(@PathVariable UUID sessionId) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteSession'");
+        return sessionMapper.toSessionDTO(sessionService.deleteSession(sessionId));
     }
 }
