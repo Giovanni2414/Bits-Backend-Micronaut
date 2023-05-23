@@ -5,8 +5,8 @@ import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 
+import com.sun.jna.platform.win32.COM.IStream;
 import edu.co.icesi.constant.CodesError;
-import edu.co.icesi.constants.ErrorConstants;
 import edu.co.icesi.error.exception.VarxenPerformanceError;
 import edu.co.icesi.error.exception.VarxenPerformanceException;
 import edu.co.icesi.model.Blob;
@@ -17,8 +17,13 @@ import io.micronaut.http.multipart.CompletedFileUpload;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.AllArgsConstructor;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -45,7 +50,11 @@ public class BlobServiceAzureImpl implements BlobService {
         BlobClient blob = blobContainerClient.getBlobClient(fileId);
 
         try {
-            blob.upload(file.getInputStream(), file.getSize(), false);
+            JSONObject jsonObject = new JSONObject(new String(file.getBytes()));
+            jsonObject = addId(jsonObject);
+            String temp = jsonObject.toString();
+            InputStream is = new ByteArrayInputStream(temp.getBytes());
+            blob.upload(is, file.getSize(), false);
             Blob saved = Blob.builder().blobId(blobId).relativePath(fileId).build();
             blobRepository.save(saved);
         } catch (Exception e) {
@@ -53,6 +62,18 @@ public class BlobServiceAzureImpl implements BlobService {
         }
 
         return blobId;
+    }
+
+    private JSONObject addId(JSONObject jsonObject){
+        JSONArray jsonArray = jsonObject.getJSONObject("log").getJSONArray("entries");
+        jsonObject.getJSONObject("log").remove("entries");
+        for(int i = 0; i < jsonArray.length(); i++){
+            jsonArray.getJSONObject(i).put("_id", UUID.randomUUID());
+            jsonArray.getJSONObject(i).remove("response");
+        }
+        jsonObject.getJSONObject("log").put("entries",jsonArray);
+
+        return jsonObject;
     }
 
     @Override
