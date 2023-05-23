@@ -54,7 +54,7 @@ public class BlobServiceAzureImpl implements BlobService {
             jsonObject = addId(jsonObject);
             String temp = jsonObject.toString();
             InputStream is = new ByteArrayInputStream(temp.getBytes());
-            blob.upload(is, file.getSize(), false);
+            blob.upload(file.getInputStream(), file.getSize(), false);
             Blob saved = Blob.builder().blobId(blobId).relativePath(fileId).build();
             blobRepository.save(saved);
         } catch (Exception e) {

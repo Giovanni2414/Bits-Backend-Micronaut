@@ -20,4 +20,7 @@ public interface SessionAPI {
     List<SessionDTO> getAllSessions(Optional<Integer> offset, Optional<Integer> limit);
 
     SessionDTO deleteSession(UUID sessionId);
+
+    @Get("/search/{name}")
+    List<SessionDTO> searchSessionbyName(String name);
 }

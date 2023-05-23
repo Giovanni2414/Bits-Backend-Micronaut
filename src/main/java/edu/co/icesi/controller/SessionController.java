@@ -55,9 +55,13 @@ public class SessionController implements SessionAPI {
     }
 
     @Override
+    @Get("/search/{name}")
+    public List<SessionDTO> searchSessionbyName(String name) {
+        return sessionService.searchSessionName(name).stream().map(sessionMapper::toSessionDTO).collect(Collectors.toList());
+    }
+
     @Delete("/{sessionId}")
     public SessionDTO deleteSession(@PathVariable UUID sessionId) {
-        // TODO Auto-generated method stub
         return sessionMapper.toSessionDTO(sessionService.deleteSession(sessionId));
     }
 }

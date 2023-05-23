@@ -73,4 +73,9 @@ public class SessionServiceImpl implements SessionService {
             throw new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.SESSION_NOT_FOUND.getCode(), CodesError.SESSION_NOT_FOUND.getMessage()));
         }
     }
+
+    @Override
+    public List<Session> searchSessionName(String name) {
+        return sessionRepository.searchSessionName(name);
+    }
 }
