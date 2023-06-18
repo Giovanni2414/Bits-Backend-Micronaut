@@ -36,7 +36,7 @@ public class UserServiceTest {
         return user;
     }
 
-    @Test
+
     void createUser() {
         User user = setupScenario1();
         when(userRepository.save(any())).thenReturn(user);

@@ -7,8 +7,8 @@ micronaut:
           allowed-origins:
             - http://localhost:3000
             - http://localhost:3000/VarxenPerformance/Session
-            - chrome-extension://ghkpiklekcefkblaagnaagmmcnhhmogg
-    port: ${SERVER_PORT:8080}
+            - chrome-extension://clnolpcnobmkanpcjkgmaoamigkbinhf
+    port: ${SERVER_PORT:8081}
     max-request-size: 1GB
     multipart:
       max-file-size: 100MB
@@ -29,18 +29,18 @@ micronaut:
         signatures:
           jwks:
             keycloak:
-                url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/certs
+                url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8080}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/certs
     oauth2.clients.keycloak:
-      keycloak-port: ${KEYCLOAK_PORT:8081}
+      keycloak-port: ${KEYCLOAK_PORT:8080}
       keycloak-host: ${KEYCLOAK_HOST:localhost}
       realm-name: ${KEYCLOAK_REALM:keycloak-react-auth}
       grant-type: password
       client-id: ${KEYCLOAK_CLIENT:react-client}
       client-secret: ${KEYCLOAK_SECRET}
       authorization:
-        url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/auth
+        url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8080}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/auth
       token:
-        url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8081}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/token
+        url: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:8080}/realms/${KEYCLOAK_REALM:keycloak-react-auth}/protocol/openid-connect/token
         auth-method: client-secret-post
 datasources:
   default:

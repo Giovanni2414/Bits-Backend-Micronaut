@@ -5,7 +5,7 @@
     <groupId>edu.co.icesi</groupId>
     <artifactId>demo</artifactId>
     <version>0.1</version>
-    <packaging>${packaging}</packaging>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>io.micronaut</groupId>
@@ -308,5 +308,6 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>BitsBackend</finalName>
     </build>
 </project>
