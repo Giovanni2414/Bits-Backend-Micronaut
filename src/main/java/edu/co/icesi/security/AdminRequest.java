@@ -20,6 +20,9 @@ public class AdminRequest {
     @Property(name = "micronaut.security.oauth2.clients.keycloak.grant-type")
     private String grandType;
 
+    @Property(name = "micronaut.security.oauth2.clients.keycloak.realm-name")
+    private String realmName;
+
     @Client("http://${micronaut.security.oauth2.clients.keycloak.keycloak-host}:${micronaut.security.oauth2.clients.keycloak.keycloak-port}")
     @Inject
     private HttpClient client;
@@ -46,7 +49,7 @@ public class AdminRequest {
                 "\"temporary\":\"false\"}],\"enabled\":\"true\"}",user.getUsername(),user.getEmail(),user.getFirstname(),
                 user.getLastname(),user.getOrganizationName());
 
-        HttpRequest<String> request = HttpRequest.POST("/admin/realms/keycloak-react-auth/users", requestBody).
+        HttpRequest<String> request = HttpRequest.POST("/admin/realms/"+realmName+"/users", requestBody).
                 header("Authorization",bearerToken).
                 contentType(MediaType.APPLICATION_JSON).
                 accept(MediaType.APPLICATION_JSON);

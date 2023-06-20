@@ -42,6 +42,9 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
     @Property(name = "micronaut.security.oauth2.clients.keycloak.client-secret")
     private String clientSecret;
 
+    @Property(name = "micronaut.security.oauth2.clients.keycloak.realm-name")
+    private String realmName;
+
     @Client("http://${micronaut.security.oauth2.clients.keycloak.keycloak-host}:${micronaut.security.oauth2.clients.keycloak.keycloak-port}")
     @Inject
     private HttpClient client;
@@ -100,7 +103,7 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
         String requestBody = "client_id=" + clientId + "&client_secret=" + clientSecret
                 + "&token=" + token;
 
-        HttpRequest<String> request = HttpRequest.POST("/realms/keycloak-react-auth/protocol/openid-connect/token/introspect", requestBody).
+        HttpRequest<String> request = HttpRequest.POST("/realms/"+realmName+"/protocol/openid-connect/token/introspect", requestBody).
                 contentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE).
                 accept(MediaType.APPLICATION_JSON);
 
