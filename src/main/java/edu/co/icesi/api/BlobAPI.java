@@ -20,7 +20,7 @@ public interface BlobAPI {
     @Post(consumes = MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_PLAIN)
     HttpResponse<UUID> upload(CompletedFileUpload file);
-
+    // Comment added just to test the CI/CD Pipeline
     @Get("/{blobId}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     HttpResponse<byte[]> download(UUID blobId);
