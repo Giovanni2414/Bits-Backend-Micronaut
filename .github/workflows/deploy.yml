@@ -22,5 +22,5 @@ jobs:
           aws-region: us-east-2
       - name: Actualizar imagen del pod
         run: |
-          aws eks update-kubeconfig --name arn:aws:eks:us-east-2:323877033443:cluster/varxen-icesi-pi2 --region us-east-2
+          aws eks update-kubeconfig --profile icesi --name varxen-icesi-pi2
           kubectl set image --record deployment/bits-deployment-backend micronautapp=xgiovanni/bits-backend:latest
