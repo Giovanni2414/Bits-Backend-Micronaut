@@ -28,4 +28,4 @@ jobs:
       - name: Actualizar imagen del pod
         run: |
           aws eks update-kubeconfig --name varxen-icesi-pi2
-          kubectl set image --record deployment/bits-deployment-backend micronautapp=xgiovanni/bits-backend:latest -n bits
+          kubectl set image --record deployment/bits-deployment-backend micronautapp=xgiovanni/bits-backend:${{ github.sha }} -n bits
