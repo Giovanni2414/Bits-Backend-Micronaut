@@ -19,11 +19,6 @@ jobs:
         with:
           push: true
           tags: xgiovanni/bits-backend:${{ github.sha }},xgiovanni/bits-backend:latest
-      - name: Install Kubectl
-        uses: azure/setup-kubectl@v2.0
-        with:
-          version: 'v1.24.0'
-        id: install
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -31,5 +26,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
       - name: Update image in EKS
-        run: |
-          kubectl set image --record deployment/bits-deployment-backend micronautapp=xgiovanni/bits-backend:latest
+        uses: myrotvorets/kubectl-action@2.0.0
+        with:
+          args: set image --record deployment/bits-deployment-backend micronautapp=xgiovanni/bits-backend:latest
