@@ -54,10 +54,11 @@ public class BlobServiceAzureImpl implements BlobService {
             jsonObject = addId(jsonObject);
             String temp = jsonObject.toString();
             InputStream is = new ByteArrayInputStream(temp.getBytes());
-            blob.upload(file.getInputStream(), file.getSize(), false);
+            blob.upload(is, temp.getBytes().length, false);
             Blob saved = Blob.builder().blobId(blobId).relativePath(fileId).build();
             blobRepository.save(saved);
         } catch (Exception e) {
+            System.out.println(e);
             throw new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.BLOB_NOT_CREATED.getCode(), CodesError.BLOB_NOT_CREATED.getMessage()));
         }
 
