@@ -11,6 +11,7 @@ import io.micronaut.http.*;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
+import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.reactivex.Flowable;
@@ -76,7 +77,11 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
                 UserContextHolder.clearContext();
             }
         }
-        return chain.proceed(request);
+        try{
+            return chain.proceed(request);
+        }catch(HttpClientResponseException e) {
+            return createUnauthorizedFilter(new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.USER_NOT_REGISTER.getCode(), CodesError.USER_NOT_REGISTER.getMessage())));
+        }
     }
 
     public boolean excludePaths(HttpRequest<?> request){

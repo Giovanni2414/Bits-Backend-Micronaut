@@ -21,7 +21,9 @@ public enum CodesError {
     SESSION_NOT_CREATED("CODE_10","Session not created: The session could not be created correctly"),
     BLOB_NOT_CREATED("CODE_11","Blob not created: The blob could not be created"),
     CONSTRAINT_VIOLATION("CODE_12", "Constraint violation: Restrictions have been violated"),
-    USER_NOT_FOUND("CODE_13","User not found: The user you are looking for was not found");
+    USER_NOT_FOUND("CODE_13","User not found: The user you are looking for was not found"),
+
+    USER_NOT_REGISTER("CODE_14", "Invalid login:Incorrect username or password");
 
     private String code;
     private String message;
