@@ -1,0 +1,31 @@
+on: push
+name: Create, Publish and Update image
+jobs:
+  build:
+    name: Build and Publish Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+      - name: Login to Docker hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: xgiovanni/bits-backend:${{ github.sha }},xgiovanni/bits-backend:latest
+      - name: Configurar credenciales de AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      - name: Actualizar imagen del pod
+        run: |
+          aws eks update-kubeconfig --name varxen-icesi-pi2
+          kubectl set image --record deployment/bits-deployment-backend micronautapp=xgiovanni/bits-backend:latest -n bits
