@@ -7,7 +7,6 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
-import io.micronaut.http.client.exceptions.HttpClientException;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import jakarta.inject.Inject;
 import org.json.JSONObject;
@@ -21,7 +20,7 @@ public class AdminRequest {
     @Property(name = "micronaut.security.oauth2.clients.keycloak.grant-type")
     private String grandType;
 
-    @Client("http://localhost:8080")
+    @Client("http://${micronaut.security.oauth2.clients.keycloak.keycloak-host}:${micronaut.security.oauth2.clients.keycloak.keycloak-port}")
     @Inject
     private HttpClient client;
 
