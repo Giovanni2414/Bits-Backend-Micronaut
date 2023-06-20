@@ -27,4 +27,4 @@ jobs:
           aws-region: us-east-2
       - name: Update image in EKS
         run: |
-          kubectl set image --record deployment/bits-deployment backend=xgiovanni/its-backend:latest
+          kubectl set image --record deployment/bits-deployment-backend micronautapp=xgiovanni/bits-backend:latest
