@@ -1,5 +1,5 @@
 on: push
-name: Create and Publish image
+name: Create, Publish and Update image
 jobs:
   build:
     name: Build and Publish Docker image
@@ -19,6 +19,11 @@ jobs:
         with:
           push: true
           tags: xgiovanni/bits-backend:${{ github.sha }},xgiovanni/bits-backend:latest
+      - name: Install Kubectl
+        uses: azure/setup-kubectl@v2.0
+        with:
+          version: 'v1.24.0'
+        id: install
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
