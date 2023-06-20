@@ -15,4 +15,6 @@ public interface SessionService {
     List<Session> getSessionsPaginated(int offset, int limit);
 
     Session deleteSession(UUID sessionId);
+
+    List<Session> searchSessionName(String name);
 }

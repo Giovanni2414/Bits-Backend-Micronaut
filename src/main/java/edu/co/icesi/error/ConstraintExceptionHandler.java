@@ -1,5 +1,6 @@
 package edu.co.icesi.error;
 
+import edu.co.icesi.constant.CodesError;
 import edu.co.icesi.constants.ErrorConstants;
 import edu.co.icesi.error.exception.VarxenPerformanceError;
 import edu.co.icesi.error.exception.VarxenPerformanceException;
@@ -23,7 +24,7 @@ public class ConstraintExceptionHandler implements ExceptionHandler<ConstraintVi
 
     @Override
     public HttpResponse<VarxenPerformanceError> handle(HttpRequest request, ConstraintViolationException exception) {
-        VarxenPerformanceError varxenError = new VarxenPerformanceError(ErrorConstants.CONSTRAINT_VIOLATION, Objects.requireNonNull(exception.getConstraintViolations().stream().reduce("", (s, constraintViolation) -> constraintViolation.getMessage(), (s, s2) -> s + s2)));
+        VarxenPerformanceError varxenError = new VarxenPerformanceError(CodesError.CONSTRAINT_VIOLATION.getCode(), Objects.requireNonNull(exception.getConstraintViolations().stream().reduce("", (s, constraintViolation) -> constraintViolation.getMessage(), (s, s2) -> s + s2)));
         VarxenPerformanceException varxenPerformanceException = new VarxenPerformanceException(HttpStatus.BAD_REQUEST, varxenError);
         return HttpResponse.status(varxenPerformanceException.getHttpStatus()).body(varxenPerformanceException.getError());
     }

@@ -1,6 +1,6 @@
 package edu.co.icesi.service.impl;
 
-import edu.co.icesi.constants.ErrorConstants;
+import edu.co.icesi.constant.CodesError;
 import edu.co.icesi.error.exception.VarxenPerformanceError;
 import edu.co.icesi.error.exception.VarxenPerformanceException;
 import edu.co.icesi.model.Session;
@@ -36,20 +36,20 @@ public class SessionServiceImpl implements SessionService {
 
         String username = UserContextHolder.getContext().getUsername();
 
-        User user = userRepository.findByUsername(username).orElseThrow( () -> new VarxenPerformanceException(HttpStatus.NOT_FOUND, new VarxenPerformanceError(ErrorConstants.USER_NOT_FOUND, ErrorConstants.USER_NOT_FOUND)));
+        User user = userRepository.findByUsername(username).orElseThrow( () -> new VarxenPerformanceException(HttpStatus.NOT_FOUND, new VarxenPerformanceError(CodesError.USER_NOT_FOUND.getCode(), CodesError.USER_NOT_FOUND.getMessage())));
 
         session.setUser(user);
 
         try {
             return sessionRepository.save(session);
         } catch (Exception e) {
-            throw new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(ErrorConstants.SESSION_NOT_CREATED, ErrorConstants.SESSION_NOT_CREATED));
+            throw new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.SESSION_NOT_CREATED.getCode(), CodesError.SESSION_NOT_CREATED.getMessage()));
         }
     }
 
     @Override
     public Session getSession(UUID id) {
-        return sessionRepository.findById(id).orElseThrow(() -> new VarxenPerformanceException(HttpStatus.NOT_FOUND, new VarxenPerformanceError(ErrorConstants.SESSION_NOT_FOUND, ErrorConstants.SESSION_NOT_FOUND)));
+        return sessionRepository.findById(id).orElseThrow(() -> new VarxenPerformanceException(HttpStatus.NOT_FOUND, new VarxenPerformanceError(CodesError.SESSION_NOT_FOUND.getCode(), CodesError.SESSION_NOT_FOUND.getMessage())));
     }
 
     @Override
@@ -64,7 +64,18 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session deleteSession(UUID sessionId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteSession'");
+        Optional<Session> session = sessionRepository.findById(sessionId);
+
+        if(session.isPresent()){
+            sessionRepository.deleteById(sessionId);
+            return session.get();
+        }else {
+            throw new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.SESSION_NOT_FOUND.getCode(), CodesError.SESSION_NOT_FOUND.getMessage()));
+        }
+    }
+
+    @Override
+    public List<Session> searchSessionName(String name) {
+        return sessionRepository.searchSessionName(name);
     }
 }
