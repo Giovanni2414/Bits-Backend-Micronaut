@@ -28,5 +28,5 @@ jobs:
       - name: Update image in EKS
         uses: steebchen/kubectl@v2.0.0
         with:
-          config: ${{ secrets.KUBE_CONFIG_DATA }}
+          config: ${{ secrets.KUBE_CONFIG }}
           command: set image --record deployment/bits-deployment-backend micronautapp=xgiovanni/bits-backend:latest
