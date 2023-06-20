@@ -14,17 +14,13 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Instalar kubectl
-        run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/
       - name: Configurar credenciales de AWS
-        run: |
-          mkdir ~/.aws
-          echo "[default]" >> ~/.aws/credentials
-          echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
-          echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
       - name: Actualizar imagen del pod
         run: |
+          aws eks update-kubeconfig --name arn:aws:eks:us-east-2:323877033443:cluster/varxen-icesi-pi2 --region us-east-2
           kubectl set image --record deployment/bits-deployment-backend micronautapp=xgiovanni/bits-backend:latest
