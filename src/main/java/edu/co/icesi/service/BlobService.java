@@ -15,5 +15,5 @@ public interface BlobService {
 
     java.util.List<Blob> listBlobs();
 
-    Blob deleteBlob(UUID blobId);
+    void deleteBlob(UUID blobId);
 }

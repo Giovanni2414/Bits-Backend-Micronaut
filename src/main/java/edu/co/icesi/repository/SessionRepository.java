@@ -6,6 +6,7 @@ import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -14,5 +15,6 @@ public interface SessionRepository extends JpaRepository<Session, UUID> {
     @Query("SELECT e FROM Session e WHERE e.name LIKE :name")
     List<Session> searchSessionName(String name);
 
+    Optional<Session> findByName(String name);
 
 }

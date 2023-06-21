@@ -29,6 +29,6 @@ public interface BlobAPI {
     List<BlobDTO> listAll();
 
     @Delete
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    HttpResponse<byte[]> deleteBlob(UUID blobId);
+    @Produces(MediaType.TEXT_PLAIN)
+    void deleteBlob(UUID blobId);
 }

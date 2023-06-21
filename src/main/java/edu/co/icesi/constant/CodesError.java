@@ -23,8 +23,13 @@ public enum CodesError {
     CONSTRAINT_VIOLATION("CODE_12", "Constraint violation: Restrictions have been violated"),
     USER_NOT_FOUND("CODE_13","User not found: The user you are looking for was not found"),
 
-    USER_NOT_REGISTER("CODE_14", "Invalid login:Incorrect username or password");
+    USER_NOT_REGISTER("CODE_14", "Invalid login:Incorrect username or password"),
+    USERNAME_REQUIRED("CODE_15", "Username is required: The username is required"),
+    BLOB_NOT_DELETED("CODE_16", "Blob not deleted: The blob can't be deleted");
 
+    final public  static String USERNAME_REQUIRED_CONSTANT = "Username is required: The username is required";
+    final public  static String SESSION_NAME_REQUIRED_CONSTANT = "Session name is required: The session name is required";
+    final public  static String HAR_FILE_PATH_REQUIRED_CONSTANT = "Har file path is required: The path to the har file is required";
     private String code;
     private String message;
 

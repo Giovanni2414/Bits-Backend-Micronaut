@@ -3,10 +3,9 @@ micronaut:
     cors:
       enabled: true
       configurations:
-        ui:
+        web:
           allowed-origins:
-            - http://localhost:3000
-            - http://localhost:3000/VarxenPerformance/Session
+            - http://localhost:3000/*
             - chrome-extension://clnolpcnobmkanpcjkgmaoamigkbinhf
     port: ${SERVER_PORT:8081}
     max-request-size: 1GB

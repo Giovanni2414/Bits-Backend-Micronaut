@@ -59,14 +59,7 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
                     String jwt = request.getHeaders().getAuthorization().get().replace(TOKEN_PREFIX, StringUtils.EMPTY_STRING);
                     String token = decodeJWT(jwt);
                     KeycloakUser keycloakUser = parseKeycloakUser(token);
-                    System.out.println(keycloakUser.getUsername());
-                    System.out.println(keycloakUser.getEmail());
-                    System.out.println(keycloakUser.getToken());
                     UserContextHolder.setUserContext(keycloakUser);
-                    System.out.println("CONTEX HOLDER");
-                    System.out.println(UserContextHolder.getContext().getUsername());
-                    System.out.println(UserContextHolder.getContext().getEmail());
-                    System.out.println(UserContextHolder.getContext().getToken());
                     return chain.proceed(request);
                 }else{
                     return createUnauthorizedFilter(new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.CODES_01.getCode(), CodesError.CODES_01.getMessage())));
@@ -79,7 +72,7 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
         }
         try{
             return chain.proceed(request);
-        }catch(HttpClientResponseException e) {
+        }catch (HttpClientResponseException e) {
             return createUnauthorizedFilter(new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.USER_NOT_REGISTER.getCode(), CodesError.USER_NOT_REGISTER.getMessage())));
         }
     }

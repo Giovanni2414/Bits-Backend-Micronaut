@@ -52,9 +52,8 @@ public class BlobController implements BlobAPI {
     }
 
     @Override
-    public HttpResponse<byte[]> deleteBlob(UUID blobId) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'deleteBlob'");
+    public void deleteBlob(UUID blobId) {
+        blobService.deleteBlob(blobId);
     }
 
 

@@ -32,6 +32,7 @@ public class SessionController implements SessionAPI {
     @Override
     @Post
     @Produces(MediaType.APPLICATION_JSON)
+
     public SessionDTO createSession(@Valid @Body SessionDTO sessionDTO) {
         return sessionMapper.toSessionDTO(sessionService.createSession(sessionMapper.toSession(sessionDTO)));
     }

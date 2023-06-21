@@ -13,6 +13,7 @@ import java.util.UUID;
 public interface SessionMapper {
 
     @Mapping(source = "harFilePath", target = "blob.blobId")
+    @Mapping(source = "username", target = "user.username")
     Session toSession(SessionDTO sessionDTO);
 
     @Mapping(source = "blob.blobId", target = "harFilePath")

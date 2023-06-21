@@ -26,6 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Singleton
@@ -65,14 +66,14 @@ public class BlobServiceAzureImpl implements BlobService {
         return blobId;
     }
 
-    private JSONObject addId(JSONObject jsonObject){
+    private JSONObject addId(JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONObject("log").getJSONArray("entries");
         jsonObject.getJSONObject("log").remove("entries");
-        for(int i = 0; i < jsonArray.length(); i++){
+        for (int i = 0; i < jsonArray.length(); i++) {
             jsonArray.getJSONObject(i).put("_id", UUID.randomUUID());
             jsonArray.getJSONObject(i).remove("response");
         }
-        jsonObject.getJSONObject("log").put("entries",jsonArray);
+        jsonObject.getJSONObject("log").put("entries", jsonArray);
 
         return jsonObject;
     }
@@ -103,9 +104,12 @@ public class BlobServiceAzureImpl implements BlobService {
     }
 
     @Override
-    public Blob deleteBlob(UUID blobId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteBlob'");
+    public void deleteBlob(UUID blobId) {
+        Blob currentBlob = blobRepository.findById(blobId).orElseThrow(() -> new VarxenPerformanceException(HttpStatus.NOT_FOUND,
+                new VarxenPerformanceError(CodesError.BLOB_NOT_DELETED.getCode(), CodesError.BLOB_NOT_DELETED.getMessage())));
+        BlobClient blob = blobContainerClient.getBlobClient(currentBlob.getRelativePath());
+        blob.delete();
+        blobRepository.delete(currentBlob);
     }
-    
+
 }
