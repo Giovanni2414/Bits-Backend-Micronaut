@@ -3,18 +3,13 @@ package edu.co.icesi.security;
 import edu.co.icesi.model.User;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.reactivex.Flowable;
 import jakarta.inject.Inject;
-import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.json.JSONObject;
-import org.reactivestreams.Publisher;
-
-import java.util.concurrent.Flow;
 
 public class AdminRequest {
 
