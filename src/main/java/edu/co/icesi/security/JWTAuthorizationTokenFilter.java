@@ -105,8 +105,10 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
                 contentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE).
                 accept(MediaType.APPLICATION_JSON);
 
-        HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
-        JSONObject jsonObject = new JSONObject(response.body());
+        Flowable<String> response = Flowable.fromPublisher(client.retrieve(request));
+        String res = response.first("error").blockingGet();
+        //HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
+        JSONObject jsonObject = new JSONObject(res);
         String email = jsonObject.get("email").toString();
         String username = jsonObject.get("preferred_username").toString();
         List<String> roles = new ArrayList<>();

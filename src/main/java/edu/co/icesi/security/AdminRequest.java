@@ -30,22 +30,16 @@ public class AdminRequest {
     private String getAdminToken() {
         String requestBody = "username=" + ADMIN_USERNAME + "&password=" + ADMIN_PASSWORD
                 + "&grant_type=" + grandType + "&client_id=admin-cli";
-        System.out.println("Hpta1");
+
         HttpRequest<String> request = HttpRequest.POST("/realms/master/protocol/openid-connect/token", requestBody).
                 contentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE).
                 accept(MediaType.APPLICATION_JSON);
 
-        System.out.println("Hpta2");
         Flowable<String> response = Flowable.fromPublisher(client.retrieve(request));
         String res = response.first("error").blockingGet();
-        //String res = response.blockingLast();
         //HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
-        System.out.println("Hpta3");
         client.refresh();
-        System.out.println("Hpta4");
-        System.out.println(res);
         JSONObject jsonObject = new JSONObject(res);
-        System.out.println("Hpta5");
         return jsonObject.get("access_token").toString();
     }
 
@@ -63,7 +57,9 @@ public class AdminRequest {
                 accept(MediaType.APPLICATION_JSON);
 
         try{
-            client.toBlocking().exchange(request, String.class);
+            Flowable<String> response = Flowable.fromPublisher(client.retrieve(request));
+            String res = response.first("error").blockingGet();
+            System.out.println(res);
         }catch (HttpClientResponseException hcre){
             hcre.getMessage().contains("Conflict");
             //TODO waiting for exception to users conflict
