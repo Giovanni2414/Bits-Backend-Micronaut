@@ -46,6 +46,7 @@ public class AdminRequest {
 
     public boolean registerUserKeycloak(User user){
         String token = getAdminToken();
+        System.out.println(token);
         String bearerToken = "Bearer " + token;
         System.out.println("si1");
         String requestBody = String.format("{\"username\":\"%s\",\"email\":\"%s\",\"firstName\":\"%s\",\"lastName\":\"%s\"," +
