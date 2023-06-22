@@ -9,6 +9,7 @@ import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import jakarta.inject.Inject;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.json.JSONObject;
 
 public class AdminRequest {
@@ -30,14 +31,18 @@ public class AdminRequest {
     private String getAdminToken() {
         String requestBody = "username=" + ADMIN_USERNAME + "&password=" + ADMIN_PASSWORD
                 + "&grant_type=" + grandType + "&client_id=admin-cli";
-
+        System.out.println("Hpta1");
         HttpRequest<String> request = HttpRequest.POST("/realms/master/protocol/openid-connect/token", requestBody).
                 contentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE).
                 accept(MediaType.APPLICATION_JSON);
 
+        System.out.println("Hpta2");
         HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
+        System.out.println("Hpta3");
         client.refresh();
+        System.out.println("Hpta4");
         JSONObject jsonObject = new JSONObject(response.body());
+        System.out.println("Hpta5");
         return jsonObject.get("access_token").toString();
     }
 
