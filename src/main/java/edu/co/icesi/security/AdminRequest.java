@@ -74,12 +74,12 @@ public class AdminRequest {
                 contentType(MediaType.APPLICATION_JSON).
                 accept(MediaType.APPLICATION_JSON);
 
-
         HttpResponse<String> res;
         try {
-            res = Mono.from(client.exchange(request, String.class)).toFuture().get();
+            client.exchange(request, String.class);
+            //Mono.from(client.exchange(request, String.class)).toFuture().join();
             return true;
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (HttpClientResponseException e) {
             throw new RuntimeException(e);
         }finally {
             client.refresh();
