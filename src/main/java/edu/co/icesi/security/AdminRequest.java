@@ -8,9 +8,13 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
+import io.reactivex.Flowable;
 import jakarta.inject.Inject;
 import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.json.JSONObject;
+import org.reactivestreams.Publisher;
+
+import java.util.concurrent.Flow;
 
 public class AdminRequest {
 
@@ -37,11 +41,14 @@ public class AdminRequest {
                 accept(MediaType.APPLICATION_JSON);
 
         System.out.println("Hpta2");
-        HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
+        Flowable<String> response = Flowable.fromPublisher(client.retrieve(request));
+        String res = response.blockingLast();
+        //HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
         System.out.println("Hpta3");
         client.refresh();
         System.out.println("Hpta4");
-        JSONObject jsonObject = new JSONObject(response.body());
+        System.out.println(res);
+        JSONObject jsonObject = new JSONObject(res);
         System.out.println("Hpta5");
         return jsonObject.get("access_token").toString();
     }
