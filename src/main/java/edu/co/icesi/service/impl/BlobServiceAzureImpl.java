@@ -46,7 +46,7 @@ public class BlobServiceAzureImpl implements BlobService {
 
         UUID blobId = UUID.randomUUID();
 
-        String fileId = blobId + "." + file.getContentType().get().getExtension();
+        String fileId = blobId + ".har";
 
         BlobClient blob = blobContainerClient.getBlobClient(fileId);
 
