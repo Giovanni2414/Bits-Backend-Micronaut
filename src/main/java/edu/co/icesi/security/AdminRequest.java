@@ -55,8 +55,6 @@ public class AdminRequest {
             return jsonObject.get("access_token").toString();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
-        }finally {
-            client.refresh();
         }
     }
 
@@ -76,7 +74,7 @@ public class AdminRequest {
 
         HttpResponse<String> res;
         try {
-            client.refresh().exchange(request, String.class);
+            Mono.from(client.exchange(request, String.class)).toFuture().join();
             //Mono.from(client.exchange(request, String.class)).toFuture().join();
             return true;
         } catch (HttpClientResponseException e) {

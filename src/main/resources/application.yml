@@ -1,5 +1,16 @@
 micronaut:
+  http:
+    client:
+      event-loop-group: custom-event-loop
+  netty:
+    event-loops:
+      custom-event-loop:
+        num-threads: 20
+    default:
+      allocator:
+        max-order: 3
   server:
+    thread-selection: auto
     cors:
       enabled: true
       configurations:
@@ -51,10 +62,6 @@ datasources:
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgrespwd}
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:varxen-db}
-netty:
-  default:
-    allocator:
-      max-order: 3
 jpa.default.properties.hibernate.hbm2ddl.auto: update
 azure:
   storage:
