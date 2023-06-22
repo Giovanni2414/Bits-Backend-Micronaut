@@ -35,8 +35,8 @@ public class AdminRequest {
                 contentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE).
                 accept(MediaType.APPLICATION_JSON);
 
-        Flowable<String> response = Flowable.fromPublisher(client.retrieve(request));
-        String res = response.first("error").blockingGet();
+        Flowable<String> response = Flowable.fromPublisher(client.retrieve(request, String.class));
+        String res = response.blockingFirst();
         //HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
         client.refresh();
         JSONObject jsonObject = new JSONObject(res);
@@ -48,24 +48,23 @@ public class AdminRequest {
         String token = getAdminToken();
         System.out.println(token);
         String bearerToken = "Bearer " + token;
-        System.out.println("si1");
         String requestBody = String.format("{\"username\":\"%s\",\"email\":\"%s\",\"firstName\":\"%s\",\"lastName\":\"%s\"," +
                 "\"attributes\":{\"organization\":\"%s\"},\"credentials\":[{\"value\":\"password\"," +
                 "\"temporary\":\"false\"}],\"enabled\":\"true\"}",user.getUsername(),user.getEmail(),user.getFirstname(),
                 user.getLastname(),user.getOrganizationName());
 
-        System.out.println("si2");
         HttpRequest<String> request = HttpRequest.POST("/admin/realms/"+realmName+"/users", requestBody).
                 header("Authorization",bearerToken).
                 contentType(MediaType.APPLICATION_JSON).
                 accept(MediaType.APPLICATION_JSON);
 
         try{
-            System.out.println("si3");
-            Flowable<String> response = Flowable.fromPublisher(client.retrieve(request));
-            System.out.println("si4");
-            String res = response.first("error").blockingGet();
+            Flowable<String> response = Flowable.fromPublisher(client.retrieve(request, String.class));
+            System.out.println("siiiiiiiiiiiiii");
+            String res = response.blockingFirst();
+            System.out.println("antes");
             System.out.println(res);
+            System.out.println("despues");
         }catch (HttpClientResponseException hcre){
             hcre.getMessage().contains("Conflict");
             //TODO waiting for exception to users conflict
