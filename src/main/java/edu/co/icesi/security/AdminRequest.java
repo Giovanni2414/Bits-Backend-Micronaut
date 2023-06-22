@@ -42,7 +42,8 @@ public class AdminRequest {
 
         System.out.println("Hpta2");
         Flowable<String> response = Flowable.fromPublisher(client.retrieve(request));
-        String res = response.blockingLast();
+        String res = response.first("error").blockingGet();
+        //String res = response.blockingLast();
         //HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
         System.out.println("Hpta3");
         client.refresh();
