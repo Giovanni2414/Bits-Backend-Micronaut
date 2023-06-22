@@ -76,7 +76,7 @@ public class AdminRequest {
 
         HttpResponse<String> res;
         try {
-            client.exchange(request, String.class);
+            client.refresh().exchange(request, String.class);
             //Mono.from(client.exchange(request, String.class)).toFuture().join();
             return true;
         } catch (HttpClientResponseException e) {
