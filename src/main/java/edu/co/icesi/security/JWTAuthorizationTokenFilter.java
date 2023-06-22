@@ -58,8 +58,8 @@ public class JWTAuthorizationTokenFilter implements HttpServerFilter {
                 if(containsToken(request)) {
                     String jwt = request.getHeaders().getAuthorization().get().replace(TOKEN_PREFIX, StringUtils.EMPTY_STRING);
                     String token = decodeJWT(jwt);
-                    KeycloakUser keycloakUser = parseKeycloakUser(token);
-                    UserContextHolder.setUserContext(keycloakUser);
+                    //KeycloakUser keycloakUser = parseKeycloakUser(token);
+                    //UserContextHolder.setUserContext(keycloakUser);
                     return chain.proceed(request);
                 }else{
                     return createUnauthorizedFilter(new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.CODES_01.getCode(), CodesError.CODES_01.getMessage())));
