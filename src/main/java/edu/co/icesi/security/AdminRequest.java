@@ -35,8 +35,10 @@ public class AdminRequest {
                 contentType(MediaType.APPLICATION_FORM_URLENCODED_TYPE).
                 accept(MediaType.APPLICATION_JSON);
 
-        Flowable<String> response = Flowable.fromPublisher(client.retrieve(request, String.class));
-        String res = response.blockingFirst();
+        Flowable<String> response = Flowable.fromPublisher(client.retrieve(request));
+        String res = response.first("error").blockingGet();
+        System.out.println(res);
+        System.out.println(response.first("error").toString());
         //HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
         client.refresh();
         JSONObject jsonObject = new JSONObject(res);
