@@ -40,24 +40,29 @@ public class AdminRequest {
         //HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
         client.refresh();
         JSONObject jsonObject = new JSONObject(res);
+        System.out.println("hpta bien");
         return jsonObject.get("access_token").toString();
     }
 
     public boolean registerUserKeycloak(User user){
         String token = getAdminToken();
         String bearerToken = "Bearer " + token;
+        System.out.println("si1");
         String requestBody = String.format("{\"username\":\"%s\",\"email\":\"%s\",\"firstName\":\"%s\",\"lastName\":\"%s\"," +
                 "\"attributes\":{\"organization\":\"%s\"},\"credentials\":[{\"value\":\"password\"," +
                 "\"temporary\":\"false\"}],\"enabled\":\"true\"}",user.getUsername(),user.getEmail(),user.getFirstname(),
                 user.getLastname(),user.getOrganizationName());
 
+        System.out.println("si2");
         HttpRequest<String> request = HttpRequest.POST("/admin/realms/"+realmName+"/users", requestBody).
                 header("Authorization",bearerToken).
                 contentType(MediaType.APPLICATION_JSON).
                 accept(MediaType.APPLICATION_JSON);
 
         try{
+            System.out.println("si3");
             Flowable<String> response = Flowable.fromPublisher(client.retrieve(request));
+            System.out.println("si4");
             String res = response.first("error").blockingGet();
             System.out.println(res);
         }catch (HttpClientResponseException hcre){
