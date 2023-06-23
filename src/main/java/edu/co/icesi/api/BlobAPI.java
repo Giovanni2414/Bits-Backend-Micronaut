@@ -28,7 +28,7 @@ public interface BlobAPI {
     @Get
     List<BlobDTO> listAll();
 
-    @Delete
+    @Delete("/{blobId}")
     @Produces(MediaType.TEXT_PLAIN)
-    void deleteBlob(UUID blobId);
+    String deleteBlob(UUID blobId);
 }

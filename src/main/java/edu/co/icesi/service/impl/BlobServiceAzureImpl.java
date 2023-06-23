@@ -104,12 +104,13 @@ public class BlobServiceAzureImpl implements BlobService {
     }
 
     @Override
-    public void deleteBlob(UUID blobId) {
+    public String deleteBlob(UUID blobId) {
         Blob currentBlob = blobRepository.findById(blobId).orElseThrow(() -> new VarxenPerformanceException(HttpStatus.NOT_FOUND,
                 new VarxenPerformanceError(CodesError.BLOB_NOT_DELETED.getCode(), CodesError.BLOB_NOT_DELETED.getMessage())));
         BlobClient blob = blobContainerClient.getBlobClient(currentBlob.getRelativePath());
         blob.delete();
         blobRepository.delete(currentBlob);
+        return "The blobId " + blobId + " was deleted";
     }
 
 }

@@ -39,4 +39,9 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
+    @Override
+    public User getUser(String username) {
+        return userRepository.findByUsername(username).orElseThrow(()-> new VarxenPerformanceException(HttpStatus.BAD_REQUEST, new VarxenPerformanceError(CodesError.USER_NOT_FOUND.getCode(),CodesError.USER_NOT_FOUND.getMessage())));
+    }
 }

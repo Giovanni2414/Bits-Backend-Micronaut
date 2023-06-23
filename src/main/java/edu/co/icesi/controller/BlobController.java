@@ -52,8 +52,8 @@ public class BlobController implements BlobAPI {
     }
 
     @Override
-    public void deleteBlob(UUID blobId) {
-        blobService.deleteBlob(blobId);
+    public String deleteBlob(UUID blobId) {
+        return blobService.deleteBlob(blobId);
     }
 
 

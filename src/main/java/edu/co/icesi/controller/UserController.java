@@ -10,6 +10,8 @@ import io.micronaut.security.rules.SecurityRule;
 import jakarta.inject.Inject;
 import lombok.AllArgsConstructor;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @Controller("/users")
 @Secured(SecurityRule.IS_ANONYMOUS)
@@ -27,7 +29,9 @@ public class UserController implements UserAPI {
     }
 
     @Override
-    public String testGet() {
-        return "Test Get";
+    public UserDTO getUser(String username) {
+        return userMapper.fromUser(userService.getUser(username));
     }
+
+
 }
