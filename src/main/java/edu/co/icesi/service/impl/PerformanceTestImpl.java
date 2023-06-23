@@ -58,8 +58,7 @@ public class PerformanceTestImpl implements PerformanceTestService {
         HttpResponse<String> res;
         try {
             res = Mono.from(client.exchange(request, String.class)).toFuture().get();
-            String body = res.getBody().orElseThrow(()->new RuntimeException("Err"));
-            return new JSONObject(body).toString();
+            return res.getBody().orElseThrow(()->new RuntimeException("Err"));
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
