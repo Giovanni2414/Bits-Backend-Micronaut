@@ -27,7 +27,8 @@ public enum CodesError {
     USERNAME_REQUIRED("CODE_15", "Username is required: The username is required"),
     BLOB_NOT_DELETED("CODE_16", "Blob not deleted: The blob can't be deleted"),
     REGISTERED_USERNAME("CODE_17", "Username already registered: The username who has already registered is already registered."),
-    REGISTERED_MAIL("CODE_18", "Mail already registered: The mail who has already registered is already registered.");
+    REGISTERED_MAIL("CODE_18", "Mail already registered: The mail who has already registered is already registered."),
+    ;
 
     final public  static String USERNAME_REQUIRED_CONSTANT = "Username is required: The username is required";
     final public  static String SESSION_NAME_REQUIRED_CONSTANT = "Session name is required: The session name is required";

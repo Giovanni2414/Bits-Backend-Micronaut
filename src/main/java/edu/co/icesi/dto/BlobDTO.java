@@ -13,7 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Introspected
-
 public class BlobDTO {
 
     private UUID blobId;

@@ -63,6 +63,10 @@ datasources:
     password: ${DB_PASSWORD:postgrespwd}
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:varxen-db}
 jpa.default.properties.hibernate.hbm2ddl.auto: update
+performance-frameworks:
+  locust:
+    host: ${LOCUST_HOST:c782-2800-484-d37f-3f3-6a59-4b01-5ca2-b018.ngrok-free.app}
+    port: ${LOCUST_PORT:80}
 azure:
   storage:
     container:

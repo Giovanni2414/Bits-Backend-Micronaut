@@ -1,7 +1,6 @@
 package edu.co.icesi.error;
 
 import edu.co.icesi.constant.CodesError;
-import edu.co.icesi.constants.ErrorConstants;
 import edu.co.icesi.error.exception.VarxenPerformanceError;
 import edu.co.icesi.error.exception.VarxenPerformanceException;
 import io.micronaut.context.annotation.Primary;
