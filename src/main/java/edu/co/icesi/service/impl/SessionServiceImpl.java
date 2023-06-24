@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Singleton
 @AllArgsConstructor
@@ -71,6 +72,11 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public List<Session> getSessionsPaginated(int offset, int limit) {
         return sessionRepository.findAll(Pageable.from(offset, limit)).getContent();
+    }
+
+    @Override
+    public List<Session> getUserSessions(String username) {
+        return sessionRepository.findAll().stream().filter(session -> session.getUser().getUsername().equals(username)).collect(Collectors.toList());
     }
 
     @Override

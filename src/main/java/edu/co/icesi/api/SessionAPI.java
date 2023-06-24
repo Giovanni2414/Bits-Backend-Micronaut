@@ -1,11 +1,12 @@
 package edu.co.icesi.api;
 
+import com.azure.core.annotation.QueryParam;
 import edu.co.icesi.dto.SessionDTO;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.*;
 import io.micronaut.http.client.annotation.Client;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +18,10 @@ public interface SessionAPI {
 
     SessionDTO getSession(UUID id);
 
-    List<SessionDTO> getAllSessions(Optional<Integer> offset, Optional<Integer> limit);
+    List<SessionDTO> getAllSessions(Optional<Integer> page, Optional<Integer> pageSize);
+
+    @Get("/user-sessions/{username}")
+    List<SessionDTO> getUserSessions(@NotNull @NotEmpty @PathVariable String username);
 
     SessionDTO deleteSession(UUID sessionId);
 

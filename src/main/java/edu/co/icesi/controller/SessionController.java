@@ -46,13 +46,18 @@ public class SessionController implements SessionAPI {
 
     @Override
     @Get
-    public List<SessionDTO> getAllSessions(@QueryValue Optional<Integer> offset, @QueryValue Optional<Integer> limit) {
-
-        if (offset.isPresent() && limit.isPresent()) {
-            return sessionService.getSessionsPaginated(offset.get(), limit.get()).stream().map(sessionMapper::toSessionDTO).collect(Collectors.toList());
+    public List<SessionDTO> getAllSessions(@QueryValue Optional<Integer> page, @QueryValue Optional<Integer> pageSize) {
+        if (page.isPresent() && pageSize.isPresent()) {
+            return sessionService.getSessionsPaginated(page.get(), pageSize.get()).stream().map(sessionMapper::toSessionDTO).collect(Collectors.toList());
         }
 
         return sessionService.getAllSessions().stream().map(sessionMapper::toSessionDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SessionDTO> getUserSessions(String username) {
+        System.out.println("username:" + username);
+        return sessionService.getUserSessions(username).stream().map(sessionMapper::toSessionDTO).collect(Collectors.toList());
     }
 
     @Override
