@@ -1,9 +1,13 @@
 package edu.co.icesi.controller;
 
 import edu.co.icesi.api.SessionAPI;
+import edu.co.icesi.constant.CodesError;
 import edu.co.icesi.dto.SessionDTO;
+import edu.co.icesi.error.exception.VarxenPerformanceError;
+import edu.co.icesi.error.exception.VarxenPerformanceException;
 import edu.co.icesi.mapper.SessionMapper;
 import edu.co.icesi.service.SessionService;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 import io.micronaut.security.annotation.Secured;
@@ -55,15 +59,16 @@ public class SessionController implements SessionAPI {
     }
 
     @Override
-    public List<SessionDTO> getUserSessions(String username) {
-        System.out.println("username:" + username);
-        return sessionService.getUserSessions(username).stream().map(sessionMapper::toSessionDTO).collect(Collectors.toList());
+    public List<SessionDTO> getAllSessionsByUser(String username) {
+        return sessionService.getAllSessionsByUser(username).stream().map(sessionMapper::toSessionDTO).collect(
+                Collectors.toList());
     }
 
     @Override
     @Get("/search/{name}")
     public List<SessionDTO> searchSessionbyName(String name) {
-        return sessionService.searchSessionName(name).stream().map(sessionMapper::toSessionDTO).collect(Collectors.toList());
+        return sessionService.searchSessionName(name).stream().map(sessionMapper::toSessionDTO).collect(
+                Collectors.toList());
     }
 
     @Delete("/{sessionId}")

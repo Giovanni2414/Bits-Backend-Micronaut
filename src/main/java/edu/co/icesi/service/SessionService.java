@@ -12,7 +12,9 @@ public interface SessionService {
 
     List<Session> getAllSessions();
 
-    List<Session> getSessionsPaginated(int offset, int limit);
+    List<Session> getAllSessionsByUser(String username);
+
+    List<Session> getSessionsPaginated(int page, int pageSize);
 
     List<Session> getUserSessions(String username);
 
