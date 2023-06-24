@@ -15,6 +15,8 @@ public interface SessionRepository extends JpaRepository<Session, UUID> {
     @Query("SELECT e FROM Session e WHERE e.name LIKE :name")
     List<Session> searchSessionName(String name);
 
+    List<Session> findAllByUserUsername(String username);
+
     Optional<Session> findByName(String name);
 
 }

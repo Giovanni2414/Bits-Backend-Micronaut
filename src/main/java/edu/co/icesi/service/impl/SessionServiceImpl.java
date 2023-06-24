@@ -68,10 +68,14 @@ public class SessionServiceImpl implements SessionService {
     public List<Session> getAllSessions() {
         return new ArrayList<>(sessionRepository.findAll());
     }
+    @Override
+    public List<Session> getAllSessionsByUser(String username) {
+        return sessionRepository.findAllByUserUsername(username);
+    }
 
     @Override
-    public List<Session> getSessionsPaginated(int offset, int limit) {
-        return sessionRepository.findAll(Pageable.from(offset, limit)).getContent();
+    public List<Session> getSessionsPaginated(int page, int pageSize) {
+        return sessionRepository.findAll(Pageable.from(page, pageSize)).getContent();
     }
 
     @Override

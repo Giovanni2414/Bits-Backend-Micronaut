@@ -23,6 +23,8 @@ public enum CodesError {
     CONSTRAINT_VIOLATION("CODE_12", "Constraint violation: Restrictions have been violated"),
     USER_NOT_FOUND("CODE_13","User not found: The user you are looking for was not found"),
 
+    INVALID_USERNAME("CODE_14", "Invalid request:Invalid username"),
+
     USER_NOT_REGISTER("CODE_14", "Invalid login:Incorrect username or password"),
     USERNAME_REQUIRED("CODE_15", "Username is required: The username is required"),
     BLOB_NOT_DELETED("CODE_16", "Blob not deleted: The blob can't be deleted"),
